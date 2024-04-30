@@ -13,7 +13,6 @@ typedef struct { // 큐 타입
 void error(char *message)
 {
 	fprintf(stderr, "%s\n", message);
-	exit(1);
 }
 
 
@@ -31,8 +30,8 @@ int is_full(QueueType *q) {
 
 void enqueue(QueueType *q, element item) {
     if(is_full(q)) {
-        // error("큐가 포화상태입니다.");
-        printf("큐가 포화상태입니다.\n");
+        error("큐가 포화상태입니다.");
+      //  printf("큐가 포화상태입니다.\n");
     }
     else {
         q->rear = (q->rear + 1) % MAX_QUEUE_SIZE;
@@ -42,8 +41,8 @@ void enqueue(QueueType *q, element item) {
 
 element dequeue(QueueType *q) {
     if(is_empty(q)) {
-        // error("큐가 공백상태입니다.");
-        printf("큐가 공백상태입니다.\n");
+        error("큐가 공백상태입니다.");
+        //printf("큐가 공백상태입니다.\n");
         return 0;
     }
     else {
@@ -70,6 +69,7 @@ void print_queue(QueueType *q) {
         printf("\n");
     }
 }
+
 
 int main() {
     QueueType queue;
