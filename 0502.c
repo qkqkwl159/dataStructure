@@ -1,11 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-#define MAX_QUEUE_SIZE 6
+#define MAX_QUEUE_SIZE 100
 #define MAX_STACK_SIZE 100
-
-
 
 typedef int element;
 typedef struct { // 큐 타입
@@ -52,25 +49,31 @@ int dequeue(QueueType* queue) {
     return queue->data[queue->front];
 }
 
+char toLower(char c) {
+    if (c >= 'A' && c <= 'Z') {
+        return c + 'a' - 'A';
+    }
+    return c;
+}
+
 int isPalindrome(char* str) {
     Stack stack;
     QueueType queue;
     stack.top = -1;
     queue.front = queue.rear = 0;
 
-    // Remove non-alphabetic characters and convert to lowercase
+    // 알파벳이 아닌 문자를 제거하고 소문자로 변환
     int i = 0;
     while (str[i]) {
         if ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z')) {
-            char c = tolower(str[i]);
-            printf("%c\n", c);
+            char c = toLower(str[i]);
             push(&stack, c);
             enqueue(&queue, c);
         }
         i++;
     }
 
-    // Check if the characters in stack and queue are the same
+    // 스택과 큐의 문자가 같은지 않다면 회문이 아님
     while (stack.top != -1) {
         if (pop(&stack) != dequeue(&queue)) {
             return 0; // Not a palindrome
@@ -90,11 +93,12 @@ int main() {
         printf("3. 종료\n");
         printf("메뉴 선택: ");
         scanf("%d", &choice);
+        while (getchar() != '\n');  // 입력 버퍼 지우기
 
         switch (choice) {
             case 1:
                 printf("회문을 입력하세요: ");
-                scanf("%s", str);
+                scanf("%[^\n]s", str);
                 break;
             case 2:
                 if (isPalindrome(str)) {
@@ -104,10 +108,11 @@ int main() {
                 }
                 break;
             case 3:
-                return 0;
+                exit(0);
             default:
                 printf("잘못된 메뉴 선택\n");
                 break;
         }
     }
+    return 0;
 }
