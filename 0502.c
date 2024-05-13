@@ -101,11 +101,6 @@ int main() {
                 scanf("%[^\n]s", str);
                 break;
             case 2:
-                if (isPalindrome(str)) {
-                    printf("회문입니다.\n");
-                } else {
-                    printf("회문이 아닙니다.\n");
-                }
                 break;
             case 3:
                 exit(0);
